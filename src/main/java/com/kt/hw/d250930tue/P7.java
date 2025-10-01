@@ -47,10 +47,9 @@ public class P7 {
 			.filter(o -> o.status == Status.COMPLETED)
 			.collect(groupingBy(o -> o.product, summingInt(o -> o.quantity)))
 			.entrySet().stream()
-			.sorted(
-				Comparator.<Map.Entry<String, Integer>>comparingLong(Map.Entry::getValue) // 값 기준
-					.reversed() // 내림차순
-					.thenComparing(Map.Entry::getKey) // 값 같으면 키 기준 오름차순
+			.sorted(Comparator
+				.comparing(Map.Entry<String, Integer>::getValue).reversed() // 값 기준 내림차순
+				.thenComparing(Map.Entry::getKey) // 값 같으면 키 기준 오름차순
 			)
 			.limit(3)
 			.map(Map.Entry::getKey)

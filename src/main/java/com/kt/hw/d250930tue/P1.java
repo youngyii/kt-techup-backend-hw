@@ -24,6 +24,8 @@ public class P1 {
 			.filter(n -> n % 2 == 0)
 			.map(n -> n * n)
 			.reduce(0, Integer::sum);
+			//.mapToInt(Integer::intValue)
+			//.sum();
 
 		return streamSum;
 	}

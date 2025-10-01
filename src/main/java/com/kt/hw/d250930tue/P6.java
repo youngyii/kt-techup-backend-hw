@@ -21,15 +21,15 @@ public class P6 {
 		// TODO
 
 		List<String> streamResult = sentences.stream()
-			.flatMap(s -> Arrays.stream(s.replaceAll("[^a-zA-Z0-9\\s]", "").split("\\s+")))
+			//.flatMap(s -> Arrays.stream(s.replaceAll("[^a-zA-Z0-9\\s]", "").split("\\s+")))
+			.flatMap(s -> Arrays.stream(s.split("\\W+"))) // 비-단어 문자를 구분자로 분할
 			.map(s -> s.toLowerCase().trim())
 			.filter(s -> !s.isEmpty())
 			.collect(groupingBy(s -> s, counting()))
 			.entrySet().stream()
-			.sorted(
-				Comparator.<Map.Entry<String, Long>>comparingLong(Map.Entry::getValue) // 값 기준
-					.reversed() // 내림차순
-					.thenComparing(Map.Entry::getKey) // 값 같으면 키 기준 오름차순
+			.sorted(Comparator
+				.comparing(Map.Entry<String, Long>::getValue).reversed() // 값 기준 내림차순
+				.thenComparing(Map.Entry::getKey) // 값 같으면 키 기준 오름차순
 			)
 			.limit(5)
 			.map(Map.Entry::getKey)
